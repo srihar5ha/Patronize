@@ -4,6 +4,9 @@ import {
   useContract,
   useContractMetadata,
   useUser,
+  useOwnedNFTs,
+  useAddress,
+  useClaimNFT, Web3Button
 } from "@thirdweb-dev/react";
 import { ThirdwebSDK } from "@thirdweb-dev/sdk";
 import { useRouter } from "next/router";
@@ -13,6 +16,7 @@ import { contractAddress } from "../../const/yourDetails";
 import { Header } from "../components/Header";
 import styles from "../styles/Home.module.css";
 import checkBalance from "../util/checkBalance";
+import { ethers } from 'ethers';
 
 export default function Home() {
   const { isLoggedIn, isLoading } = useUser();
@@ -20,36 +24,50 @@ export default function Home() {
   const { contract } = useContract(contractAddress);
   const { data: contractMetadata, isLoading: contractLoading } =
     useContractMetadata(contract);
+    const address = useAddress();
+    const { data: nfts } = useOwnedNFTs(contract, address);
+const {
+    mutate: claimNFT,error} = useClaimNFT(contract);
+
+  if (error) {
+    console.error("failed to claim nft", error);
+  }
 
   useEffect(() => {
+
     if (!isLoading && !isLoggedIn) {
       router.push("/login");
+    
     }
   }, [isLoading, isLoggedIn, router]);
 
   return (
     <div className={styles.container}>
       <Header />
-      <h2 className={styles.heading}>NFT Gated Content </h2>
-      <h1 className={styles.h1}>Auth</h1>
+      <h1 className={styles.h1}>Patronize</h1>
+      <h4>A new way to Support content creators. </h4>
+      <h5>Access exclusive content made by people you love and support them directly, no middleman, no fees, no ads. On Polygon.
 
-      <p className={styles.explain}>
-        Serve exclusive content to users who own an NFT from <br />
-        your collection, using{" "}
-        <a
-          className={styles.link}
-          href="https://portal.thirdweb.com/auth"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Auth
-        </a>
-        .{" "}
-      </p>
-
+      </h5>
+      {!nfts?.length && !contractLoading ? (
+         <Web3Button
+         contractAddress={contractAddress}
+         action={() =>
+           claimNFT({
+             to: address, // Use useAddress hook to get current wallet address
+             quantity: ethers.BigNumber.from(1),
+             tokenId: 0
+           })
+        
+   }>Buy NFT</Web3Button>
+         ) :
+         contractLoading ? (
+          // User has NFTs but contractMetadata is not ready yet
+          <p>Loading11...</p>
+      ) :
       <div className={styles.card}>
-        <h3>Exclusive unlocked</h3>
-        <p>Your NFT unlocked access to this product.</p>
+        <h3>Thank You for your support, here's the Premium content!</h3>
+        <p>Your NFT unlocked access to this content.</p>
 
         {contractMetadata && (
           <div className={styles.nft}>
@@ -65,10 +83,11 @@ export default function Home() {
             </div>
           </div>
         )}
-        {contractLoading && <p>Loading...</p>}
+        {contractLoading && <p>Loadingss...</p>}
 
         <ConnectWallet theme="dark" className={styles.connect} />
       </div>
+}
     </div>
   );
 }
@@ -107,17 +126,18 @@ export async function getServerSideProps(context) {
   );
 
   // Check to see if the user has an NFT
-  const hasNft = await checkBalance(sdk, user.address);
-
-  // If they don't have an NFT, redirect them to the login page
-  if (!hasNft) {
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
-  }
+  // const hasNft = await checkBalance(sdk, user.address);
+  //   console.log("has nft ",hasNft)
+  // // If they don't have an NFT, redirect them to the login page
+  // if (!hasNft) {
+  //   console.log("no nfts,redirecting")
+  //   return {
+  //     redirect: {
+  //       destination: "/claim",
+  //       permanent: false,
+  //     },
+  //   };
+  // }
 
   // Finally, return the props
   return {

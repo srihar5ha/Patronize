@@ -23,6 +23,21 @@
   margin: 0px;
   font-size: 4rem;
   line-height: 4rem;
+  background: linear-gradient(90.35deg, #ba94d8 3.41%, #d62bbf 90.33%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+}
+
+.h5{
+  margin: 0px;
+  font-size: 3rem;
+  line-height: 3rem;
+  font-weight: lighter;
+  background-color: #bbbbbc;
+  -webkit-text-fill-color: aliceblue;
+
 }
 
 .explain {

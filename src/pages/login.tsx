@@ -4,6 +4,7 @@ import {
   useAddress,
   useContract,
   useContractMetadata,
+  useClaimNFT,
   useOwnedNFTs,
 } from "@thirdweb-dev/react";
 import { ThirdwebSDK } from "@thirdweb-dev/sdk";
@@ -24,34 +25,35 @@ export default function Login() {
   const router = useRouter();
 
   useEffect(() => {
-    if (nfts?.length) {
+    console.log("login data ",address,nfts)
+    if (address) {
       router.push("/");
     }
   }, [nfts, router, address]);
 
+  // const {
+  //   mutate: claimNFT,
+  //   isLoading,
+  //   error,
+  // } = useClaimNFT(contract);
+
+  // if (error) {
+  //   console.error("failed to claim nft", error);
+  // }
+
+
+
+
+
   return (
     <div className={styles.container}>
       <Header />
-      <h2 className={styles.heading}>NFT Gated Content </h2>
-      <h1 className={styles.h1}>Auth</h1>
-
-      <p className={styles.explain}>
-        Serve exclusive content to users who own an NFT from <br />
-        your collection, using{" "}
-        <a
-          className={styles.link}
-          href="https://portal.thirdweb.com/auth"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Auth
-        </a>
-        .{" "}
-      </p>
+      {/* <h2 className={styles.heading}>Welcome to</h2> */}
+      <h1 className={styles.h1}>Patronize</h1>
 
       <div className={styles.card}>
-        <h3>Holder exclusive</h3>
-        <p>To unlock this product, you need:</p>
+        <h3></h3>
+        <p>To access this content, you need:</p>
 
         {contractMetadata && (
           <div className={styles.nft}>
@@ -63,11 +65,19 @@ export default function Login() {
             />
             <div className={styles.nftDetails}>
               <h4>{contractMetadata.name}</h4>
-              <p>{contractMetadata.description.substring(0, 100)}...</p>
+              {/* <p>{contractMetadata.description.substring(0, 100)}...</p> */}
+            <p>Please support our work by buying this NFT</p>
             </div>
           </div>
         )}
         {contractLoading && <p>Loading...</p>}
+        {/* <button
+      disabled={isLoading}
+      onClick={() => claimNFT({ to: "0x50c2ff55821401547F0319181aaBD916C9C1D026", quantity: 1 })}
+    >
+      Buy NFT
+    </button> */}
+
 
         <ConnectWallet theme="dark" className={styles.connect} />
       </div>
@@ -75,50 +85,52 @@ export default function Login() {
   );
 }
 
-export async function getServerSideProps(context) {
-  const user = await getUser(context.req);
+// export async function getServerSideProps(context) {
+//   const user = await getUser(context.req);
 
-  if (!user) {
-    return {
-      props: {},
-    };
-  }
+//   if (!user) {
+//     console.log("no user.")
 
-  const secretKey = process.env.TW_SECRET_KEY;
+//     return {
+//       props: {},
+//     };
+//   }
 
-  if (!secretKey) {
-    console.log("Missing env var: TW_SECRET_KEY");
-    throw new Error("Missing env var: TW_SECRET_KEY");
-  }
+//   const secretKey = process.env.TW_SECRET_KEY;
 
-  // Ensure we are able to generate an auth token using our private key instantiated SDK
-  const PRIVATE_KEY = process.env.THIRDWEB_AUTH_PRIVATE_KEY;
-  if (!PRIVATE_KEY) {
-    throw new Error("You need to add an PRIVATE_KEY environment variable.");
-  }
+//   if (!secretKey) {
+//     console.log("Missing env var: TW_SECRET_KEY");
+//     throw new Error("Missing env var: TW_SECRET_KEY");
+//   }
 
-  // Instantiate our SDK
-  const sdk = ThirdwebSDK.fromPrivateKey(
-    process.env.THIRDWEB_AUTH_PRIVATE_KEY,
-    "mumbai",
-    { secretKey }
-  );
+//   // Ensure we are able to generate an auth token using our private key instantiated SDK
+//   const PRIVATE_KEY = process.env.THIRDWEB_AUTH_PRIVATE_KEY;
+//   if (!PRIVATE_KEY) {
+//     throw new Error("You need to add an PRIVATE_KEY environment variable.");
+//   }
 
-  // Check to see if the user has an NFT
-  const hasNft = await checkBalance(sdk, user.address);
+//   // Instantiate our SDK
+//   const sdk = ThirdwebSDK.fromPrivateKey(
+//     process.env.THIRDWEB_AUTH_PRIVATE_KEY,
+//     "mumbai",
+//     { secretKey }
+//   );
 
-  // If they have an NFT, redirect them to the home page
-  if (hasNft) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
+//   // Check to see if the user has an NFT
+//   const hasNft = await checkBalance(sdk, user.address);
+//     console.log("has nft ",hasNft);
+//   // If they have an NFT, redirect them to the home page
+//   if (hasNft) {
+//     return {
+//       redirect: {
+//         destination: "/",
+//         permanent: false,
+//       },
+//     };
+//   }
 
-  // Finally, return the props
-  return {
-    props: {},
-  };
-}
+//   // Finally, return the props
+//   return {
+//     props: {},
+//   };
+// }

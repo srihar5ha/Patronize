@@ -1,8 +1,9 @@
 // Replace this with your contract address
-export const contractAddress = "0x436492DBc2E30E56FaC8F2297BD1964833c0687d";
+export const contractAddress = "0xde04b03Fa6eb01C0eA79dFb0a0AE9614C09Aa1Ed";
+//patreon nft contract deployed using thridweb dashboard.
 
 // Replace this with your domain name.
-export const domainName = "thirdweb-example.com";
+export const domainName = "patroniseNFT";
 
 // Minimum number of tokens required to access
 export const minimumBalance = 1;
