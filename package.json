@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mui/material": "^5.15.3",
     "@thirdweb-dev/auth": "^4",
     "@thirdweb-dev/react": "^4",
     "@thirdweb-dev/sdk": "^4",

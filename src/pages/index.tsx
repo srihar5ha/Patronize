@@ -45,16 +45,33 @@ const {
   return (
     <div className={styles.container}>
       <Header />
-      <h1 className={styles.h1}>PATRON</h1>
       <br /><br />
       
       { address?
         (<span>Welcome, {address.slice(0,6)}... </span>
         ):
-        <p></p>
-      
-      }{!nfts?.length && !contractLoading ? (
-         <Web3Button
+      <p></p>
+      }
+      {!nfts?.length && !contractLoading ? (
+         <div>
+          <div className={styles.card}>
+            <p>To access this content, you need:</p>
+            {contractMetadata && (
+            <div className={styles.nft}>
+            <MediaRenderer
+              src={contractMetadata.image}
+              alt={contractMetadata.name}
+              width="70px"
+              height="70px"
+            />
+            <div className={styles.nftDetails}>
+              <h4>{contractMetadata.name}</h4>
+            <p>Please support our work by buying this NFT</p>
+            </div>
+            </div>
+            )}
+            {contractLoading && <p>Loading...</p>}
+            <Web3Button
          contractAddress={contractAddress}
          action={() =>
            claimNFT({
@@ -62,9 +79,13 @@ const {
              quantity: ethers.BigNumber.from(1),
              tokenId: 0
            })
+             }>
+            Buy NFT
+        </Web3Button>
         
-   }>Buy NFT</Web3Button>
-         ) :
+        </div>
+        </div>
+      ) :
          contractLoading ? (
           // User has NFTs but contractMetadata is not ready yet
           <p>Loading...</p>

@@ -15,6 +15,8 @@ export const Header = () => {
           className={styles.logo}
         />
       </Link>
+      <h1 className={styles.h1}>PATRON</h1>
+
       <ConnectWallet theme="dark"/>
     </nav>
   );

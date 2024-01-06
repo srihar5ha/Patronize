@@ -1,0 +1,40 @@
+
+.body{
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    padding-top: 120px; /* Add padding to the body */
+
+}
+
+.content{
+
+    border: 2px solid white; /* Add a white border around the container */
+    padding: 20px; /* Add padding to the container */
+    width: 75%;
+    margin: 20% 10px 0px 10px;
+    /* display:flex;
+    justify-content:space-around;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 15px; */
+    display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+  gap: 30px;
+  justify-content: center;
+  align-content: start; /* Adjust alignment based on your needs */
+  padding: 30px;
+
+}
+
+.card{
+    cursor: grab;
+}
+
+.card:hover{
+
+}

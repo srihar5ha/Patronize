@@ -31,15 +31,6 @@ export default function Login() {
     }
   }, [nfts, router, address]);
 
-  // const {
-  //   mutate: claimNFT,
-  //   isLoading,
-  //   error,
-  // } = useClaimNFT(contract);
-
-  // if (error) {
-  //   console.error("failed to claim nft", error);
-  // }
 
 
 
@@ -49,15 +40,13 @@ export default function Login() {
     <div className={styles.container}>
       <Header />
       {/* <h2 className={styles.heading}>Welcome to</h2> */}
-      <h1 className={styles.h1}>PATRON</h1>
       <br />
       <h3>A new way to Support content creators. </h3>
 
       <h5>Access exclusive content made by people you love and support them directly, no middleman, no fees, no ads,On Polygon
       </h5>
 
-      <div className={styles.card}>
-        <h3></h3>
+      {/* <div className={styles.card}>
         <p>To access this content, you need:</p>
 
         {contractMetadata && (
@@ -70,22 +59,18 @@ export default function Login() {
             />
             <div className={styles.nftDetails}>
               <h4>{contractMetadata.name}</h4>
-              {/* <p>{contractMetadata.description.substring(0, 100)}...</p> */}
             <p>Please support our work by buying this NFT</p>
             </div>
           </div>
         )}
         {contractLoading && <p>Loading...</p>}
-        {/* <button
-      disabled={isLoading}
-      onClick={() => claimNFT({ to: "0x50c2ff55821401547F0319181aaBD916C9C1D026", quantity: 1 })}
-    >
-      Buy NFT
-    </button> */}
+        
 
 
         <ConnectWallet theme="dark" className={styles.connect}/>
-      </div>
+      </div> */}
+      <ConnectWallet theme="dark" className={styles.connect}/>
+
     </div>
   );
 }

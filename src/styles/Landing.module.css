@@ -6,8 +6,18 @@
     -o-background-size: cover;
     height: 100vh;
     width: 100vw;
+    display: flex;
+    justify-content:center;
+    align-items: center;
   }
 
+.button{
+text-decoration: none;
+background-color: black;
+}
+
 .explore{
-    
+    position:absolute;
+    right: 20px;
+    top:20px;
 }
