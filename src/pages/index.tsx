@@ -17,6 +17,7 @@ import { Header } from "../components/Header";
 import styles from "../styles/Home.module.css";
 import checkBalance from "../util/checkBalance";
 import { ethers } from 'ethers';
+import ExclusiveContent from "./exclusiveContent";
 
 export default function Home() {
   const { isLoggedIn, isLoading } = useUser();
@@ -34,8 +35,8 @@ const {
   }
 
   useEffect(() => {
-
-    if (!isLoading && !isLoggedIn) {
+    console.log("adderss ",address,isLoggedIn)
+    if (!address) {
       router.push("/login");
     
     }
@@ -44,12 +45,15 @@ const {
   return (
     <div className={styles.container}>
       <Header />
-      <h1 className={styles.h1}>Patronize</h1>
-      <h4>A new way to Support content creators. </h4>
-      <h5>Access exclusive content made by people you love and support them directly, no middleman, no fees, no ads. On Polygon.
-
-      </h5>
-      {!nfts?.length && !contractLoading ? (
+      <h1 className={styles.h1}>PATRON</h1>
+      <br /><br />
+      
+      { address?
+        (<span>Welcome, {address.slice(0,6)}... </span>
+        ):
+        <p></p>
+      
+      }{!nfts?.length && !contractLoading ? (
          <Web3Button
          contractAddress={contractAddress}
          action={() =>
@@ -63,7 +67,7 @@ const {
          ) :
          contractLoading ? (
           // User has NFTs but contractMetadata is not ready yet
-          <p>Loading11...</p>
+          <p>Loading...</p>
       ) :
       <div className={styles.card}>
         <h3>Thank You for your support, here's the Premium content!</h3>
@@ -83,9 +87,10 @@ const {
             </div>
           </div>
         )}
-        {contractLoading && <p>Loadingss...</p>}
+        <ExclusiveContent/>
+        {contractLoading && <p>Loading...</p>}
 
-        <ConnectWallet theme="dark" className={styles.connect} />
+        <ConnectWallet theme="dark" className={styles.connect } btnTitle="mamama" />
       </div>
 }
     </div>

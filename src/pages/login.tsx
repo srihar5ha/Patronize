@@ -49,7 +49,12 @@ export default function Login() {
     <div className={styles.container}>
       <Header />
       {/* <h2 className={styles.heading}>Welcome to</h2> */}
-      <h1 className={styles.h1}>Patronize</h1>
+      <h1 className={styles.h1}>PATRON</h1>
+      <br />
+      <h3>A new way to Support content creators. </h3>
+
+      <h5>Access exclusive content made by people you love and support them directly, no middleman, no fees, no ads,On Polygon
+      </h5>
 
       <div className={styles.card}>
         <h3></h3>
@@ -79,7 +84,7 @@ export default function Login() {
     </button> */}
 
 
-        <ConnectWallet theme="dark" className={styles.connect} />
+        <ConnectWallet theme="dark" className={styles.connect}/>
       </div>
     </div>
   );
